@@ -52,17 +52,21 @@
     setTimeout(() => ripple.remove(), 800);
   }
 
-  // Section visibility logic
+  // Section visibility logic with state preservation
   let sections: HTMLElement[] = [];
+  let visibleSectionIndex = 0;
+  let rippleLine: HTMLElement | null = null;
+
   onMount(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const currentSection = entry.target as HTMLElement;
+          const index = sections.indexOf(entry.target as HTMLElement);
           if (entry.isIntersecting) {
-            sections.forEach((section) => {
-              section.style.opacity = section === currentSection ? '1' : '0';
-              section.style.pointerEvents = section === currentSection ? 'auto' : 'none';
+            visibleSectionIndex = index;
+            sections.forEach((section, i) => {
+              section.style.opacity = i === index ? '1' : '0';
+              section.style.pointerEvents = i === index ? 'auto' : 'none';
             });
           }
         });
@@ -72,31 +76,40 @@
 
     sections.forEach((section) => observer.observe(section));
 
-    // Ripple line animation
+    // Ripple line animation with explicit null check
     if (rippleLine) {
       const updateRipple = () => {
+        if (!rippleLine) return; // Guard against null after initial check
         const scroll = window.scrollY / (document.body.scrollHeight - window.innerHeight);
         rippleLine.style.transform = `scaleX(${1 + scroll * 2}) translateY(${scroll * 100}vh)`;
         rippleLine.style.opacity = `${0.2 - scroll * 0.1}`;
       };
       window.addEventListener('scroll', updateRipple);
       rippleLine.addEventListener('mousemove', (e: MouseEvent) => {
+        if (!rippleLine) return; // Guard against null in event listener
         const offset = (e.clientX / window.innerWidth - 0.5) * 20;
         rippleLine.style.transform = `scaleX(1.5) translateX(${offset}vw) translateY(${window.scrollY / window.innerHeight * 100}vh)`;
       });
       return () => {
         window.removeEventListener('scroll', updateRipple);
+        if (rippleLine) {
+          rippleLine.removeEventListener('mousemove', updateRipple);
+        }
         sections.forEach((section) => observer.unobserve(section));
       };
     }
-  });
 
-  let rippleLine: HTMLElement;
+    // Prevent zoom on mobile
+    document.querySelector('meta[name="viewport"]')?.setAttribute(
+      'content',
+      'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+    );
+  });
 </script>
 
 <main>
   <!-- Intro -->
-  <div class="intro" bind:this={sections[0]} in:fade={{ duration: 1200 }}>
+  <div class="intro" bind:this={sections[0]} in:fade={{ duration: 1200, delay: visibleSectionIndex === 0 ? 0 : 0 }}>
     <h1 in:fly={{ y: -30, duration: 1000 }}>small pond</h1>
     <p in:fly={{ y: 30, duration: 1000, delay: 200 }}>
       a ripple in the void where dreams converge
@@ -104,7 +117,7 @@
   </div>
 
   <!-- Stories -->
-  <div class="stories" bind:this={sections[1]}>
+  <div class="stories" bind:this={sections[1]} in:fade={{ duration: 1200, delay: visibleSectionIndex === 1 ? 0 : 0 }}>
     <h2 in:fly={{ x: -30, duration: 1000 }}>traces</h2>
     <div class="grid">
       {#each stories as story}
@@ -123,7 +136,7 @@
   </div>
 
   <!-- About with Team -->
-  <div class="about" bind:this={sections[2]}>
+  <div class="about" bind:this={sections[2]} in:fade={{ duration: 1200, delay: visibleSectionIndex === 2 ? 0 : 0 }}>
     <h2 in:fly={{ x: -30, duration: 1000 }}>essence</h2>
     <p in:fly={{ x: 30, duration: 1000, delay: 200 }}>
       a silent expanse—ideas drift, connect, ignite
@@ -147,7 +160,7 @@
   </div>
 
   <!-- Contact -->
-  <div class="contact" bind:this={sections[3]}>
+  <div class="contact" bind:this={sections[3]} in:fade={{ duration: 1200, delay: visibleSectionIndex === 3 ? 0 : 0 }}>
     <h2 in:fly={{ x: -30, duration: 1000 }}>reach</h2>
     <form>
       <input type="text" placeholder="your echo" in:fade={{ duration: 800 }} />
@@ -169,18 +182,23 @@
 <style>
   main {
     position: relative;
-    padding: clamp(2rem, 5vw, 4rem) 0;
+    width: 100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   .intro, .stories, .about, .contact {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    width: 100%;
     min-height: 100vh;
-    padding: clamp(2rem, 10vw, 6rem) clamp(1rem, 5vw, 2rem);
+    padding: clamp(2rem, 8vh, 6rem) clamp(1rem, 5vw, 2rem);
     opacity: 1;
     transition: opacity 0.5s ease;
+    box-sizing: border-box;
   }
 
   h1, h2 {
@@ -189,7 +207,7 @@
 
   .grid, .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(14rem, 22vw, 18rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(clamp(14rem, 20vw, 18rem), 1fr));
     gap: clamp(1.5rem, 3vw, 2.5rem);
     width: 90%;
     max-width: 100rem;
@@ -277,6 +295,7 @@
     color: #f0f0f5;
     outline: none;
     transition: border-color 0.3s;
+    width: 100%;
   }
 
   input:focus, textarea:focus {

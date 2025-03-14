@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 * {
   margin: 0;
   padding: 0;
@@ -7,17 +6,25 @@
 }
 
 html {
-  font-size: 62.5%; /* 1rem = 10px base */
+  font-size: 62.5%;
   scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background: #0a0a0f; /* Void black */
-  color: #f0f0f5; /* Ghost white */
-  font-family: 'IBM Plex Mono', monospace; /* Monospace for a futuristic edge */
+  background: #0a0a0f;
+  color: #f0f0f5;
+  font-family: 'IBM Plex Mono', monospace;
   overflow-x: hidden;
+  width: 100%;
   min-height: 100vh;
-  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Fluid typography */
