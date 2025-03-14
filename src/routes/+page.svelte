@@ -10,6 +10,13 @@
     { title: "arc", desc: "thought bends toward the unseen" },
   ];
 
+  // Team data
+  const team = [
+    { name: "lyra", role: "weaver of whispers" },
+    { name: "kai", role: "shaper of echoes" },
+    { name: "sol", role: "tracer of arcs" },
+  ];
+
   // Ripple effect for mouse events
   function startRipple(event: MouseEvent) {
     const target = event.currentTarget as HTMLElement;
@@ -53,7 +60,6 @@
         entries.forEach((entry) => {
           const currentSection = entry.target as HTMLElement;
           if (entry.isIntersecting) {
-            // Show only the current section
             sections.forEach((section) => {
               section.style.opacity = section === currentSection ? '1' : '0';
               section.style.pointerEvents = section === currentSection ? 'auto' : 'none';
@@ -61,12 +67,9 @@
           }
         });
       },
-      {
-        threshold: 0.5, // Trigger when 50% of the section is in view
-      }
+      { threshold: 0.5 }
     );
 
-    // Observe all sections
     sections.forEach((section) => observer.observe(section));
 
     // Ripple line animation
@@ -88,7 +91,6 @@
     }
   });
 
-  // Ripple line reference
   let rippleLine: HTMLElement;
 </script>
 
@@ -120,12 +122,28 @@
     </div>
   </div>
 
-  <!-- About -->
+  <!-- About with Team -->
   <div class="about" bind:this={sections[2]}>
     <h2 in:fly={{ x: -30, duration: 1000 }}>essence</h2>
     <p in:fly={{ x: 30, duration: 1000, delay: 200 }}>
       a silent expanse—ideas drift, connect, ignite
     </p>
+    <div class="team" in:fade={{ duration: 800, delay: 400 }}>
+      <h3>our currents</h3>
+      <div class="team-grid">
+        {#each team as member}
+          <div
+            role="button"
+            tabindex="0"
+            on:mouseenter={startRipple}
+            on:focus={handleFocus}
+          >
+            <span class="name">{member.name}</span>
+            <span class="role">{member.role}</span>
+          </div>
+        {/each}
+      </div>
+    </div>
   </div>
 
   <!-- Contact -->
@@ -159,17 +177,17 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    min-height: 100vh; /* Full viewport height for isolation */
+    min-height: 100vh;
     padding: clamp(2rem, 10vw, 6rem) clamp(1rem, 5vw, 2rem);
     opacity: 1;
-    transition: opacity 0.5s ease; /* Smooth fade */
+    transition: opacity 0.5s ease;
   }
 
   h1, h2 {
     color: #66f0e8;
   }
 
-  .grid {
+  .grid, .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(clamp(14rem, 22vw, 18rem), 1fr));
     gap: clamp(1.5rem, 3vw, 2.5rem);
@@ -178,7 +196,7 @@
     margin: 0 auto;
   }
 
-  .grid div {
+  .grid div, .team-grid div {
     position: relative;
     padding: clamp(1rem, 2vw, 1.5rem);
     background: rgba(102, 240, 232, 0.05);
@@ -188,9 +206,35 @@
   }
 
   .grid div:hover,
-  .grid div:focus {
+  .grid div:focus,
+  .team-grid div:hover,
+  .team-grid div:focus {
     transform: translateY(-0.5rem);
     background: rgba(102, 240, 232, 0.1);
+  }
+
+  .team {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .team h3 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 300;
+    color: #66f0e8;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .team-grid .name {
+    display: block;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    color: #f0f0f5;
+  }
+
+  .team-grid .role {
+    display: block;
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    color: rgba(102, 240, 232, 0.7);
+    font-style: italic;
   }
 
   :global(.focused) {
