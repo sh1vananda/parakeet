@@ -15,14 +15,14 @@
   ];
 </script>
 
-<section class="relative flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white px-4">
+<section class="relative flex flex-col items-center justify-center w-full h-full min-h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white px-4">
   <!-- Section Title -->
   <h2 class="text-3xl font-bold text-center mb-6">Our Notable Successes</h2>
 
   <!-- Stories Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 justify-center items-center">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-screen-md mx-auto">
     {#each stories as story}
-      <div class="story-card bg-gray-900 rounded-lg shadow-lg overflow-hidden w-[12rem] h-[16rem]">
+      <div class="story-card bg-gray-900 rounded-lg shadow-lg overflow-hidden w-[12rem] h-[16rem] mx-auto">
         <!-- Gray Placeholder Block -->
         <div class="w-full h-[6rem] bg-gray-700"></div>
         <div class="p-2">
@@ -48,7 +48,7 @@ body {
 
 /* Full-screen section */
 section {
-  width: calc(100vw); /* Full viewport width without scrollbar issues */
+  width: 100%; /* Full viewport width */
 }
 
 /* Story card styling */
