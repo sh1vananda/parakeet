@@ -1,0 +1,78 @@
+@import "tailwindcss"; /* Import Tailwind CSS */
+
+/* Global Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: linear-gradient(to bottom right, #121824, #1c1f2a, #121824); /* Dark mode gradient */
+    color: #ffffff; /* White text for readability */
+    font-family: "Inter", sans-serif;
+  }
+  
+  /* Section Styling */
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full-screen sections */
+  }
+  
+  /* Title Styling */
+  h1, h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff; /* White text */
+    margin-bottom: 1rem;
+  }
+  
+  /* Gradient Animations */
+  @keyframes gradient-x {
+    0%, 100% {
+      background-position: left center;
+      background-size: auto;
+    }
+    50% {
+      background-position: right center;
+      background-size: auto;
+    }
+  }
+  
+  .animate-gradient-x {
+    animation: gradient-x 6s ease infinite;
+  }
+  
+  @keyframes gradient-y {
+    0%, 100% {
+      background-position: top center;
+      background-size: auto;
+    }
+    50% {
+      background-position: bottom center;
+      background-size: auto;
+    }
+  }
+  
+  .animate-gradient-y {
+    animation: gradient-y 6s ease infinite;
+  }
+  
+  /* Story Card Styling */
+  .story-card {
+    background-color: #1c1f2a; /* Dark gray for story cards */
+    border-radius: .5rem; /* Rounded corners */
+  }
+  
+  .story-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .story-card h3 {
+    font-size:1.25rem;font-weight:bold;margin-bottom:.5rem;color:#fff
+  }
+  
+  .story-card p{font-size:.95rem;color:#eaeaea}
