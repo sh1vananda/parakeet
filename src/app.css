@@ -1,41 +1,41 @@
-@import "tailwindcss"; /* Import Tailwind CSS */
+@import "tailwindcss";
 
-/* Reset margins and padding */
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Global Background */
-body {
-  background: linear-gradient(to bottom right, #121824, #1c1f2a, #121824); /* Dark mode gradient */
-  color: #ffffff; /* White text for readability */
-  font-family: "Inter", sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-/* Section Styling */
+body {
+  background: linear-gradient(to bottom right, #121824, #1c1f2a, #121824);
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
 section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw; /* Full viewport width */
-  min-height: 100vh; /* Full viewport height */
+  width: 100%;
+  min-height: 100vh;
 }
 
-/* Title Styling */
 h1, h2 {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #ffffff; /* White text */
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
-/* Responsive Utility Classes */
 @media screen and (max-width: 768px) {
   h1, h2 {
-    font-size: 2rem; /* Adjust title size for smaller screens */
+    font-size: 2rem;
     text-align: center;
     margin-bottom: 0.5rem;
   }

@@ -26,7 +26,7 @@
 
 <section
   bind:this={introContainer}
-  class="relative flex flex-col items-center justify-center min-h-screen text-white bg-gradient-to-br from-black via-gray-800 to-black animate-gradient-x"
+  class="relative flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-black via-gray-800 to-black animate-gradient-x text-white px-8"
 >
   <!-- Intro Text -->
   <h1
@@ -45,16 +45,26 @@
 </section>
 
 <style>
+/* Reset margins and padding */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden; /* Prevent horizontal scrollbars */
+}
 
 /* Full-screen section */
 section {
-  width: 100vw; /* Full viewport width */
-  height: calc(100vh - var(--navHeight)); /* Full viewport height minus navigation */
+  width: calc(100vw); /* Full viewport width without scrollbar issues */
 }
 
 /* Gradient animation */
 @keyframes gradient-x {
-  0%, 100% {
+  0%,
+  100% {
     background-position: left center;
     background-size: auto;
   }

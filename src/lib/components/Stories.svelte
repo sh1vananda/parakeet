@@ -15,19 +15,19 @@
   ];
 </script>
 
-<section class="relative flex flex-col items-center justify-center w-full h-full min-h-screen bg-gradient-to-br from-black via-gray-800 to-black animate-gradient-y text-white">
+<section class="relative flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white px-4">
   <!-- Section Title -->
-  <h2 class="text-4xl font-bold text-center mb-8">Our Notable Successes</h2>
+  <h2 class="text-3xl font-bold text-center mb-6">Our Notable Successes</h2>
 
   <!-- Stories Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-screen-lg px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-screen-md">
     {#each stories as story}
-      <div class="story-card bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+      <div class="story-card bg-gray-900 rounded-lg shadow-lg overflow-hidden w-[12rem] h-[16rem]">
         <!-- Gray Placeholder Block -->
-        <div class="w-full h-40 bg-gray-700"></div>
-        <div class="p-4">
-          <h3 class="text-lg font-bold mb-2">{story.title}</h3>
-          <p class="text-gray-300">{story.description}</p>
+        <div class="w-full h-[6rem] bg-gray-700"></div>
+        <div class="p-2">
+          <h3 class="text-base font-bold mb-1">{story.title}</h3>
+          <p class="text-sm text-gray-300">{story.description}</p>
         </div>
       </div>
     {/each}
@@ -35,23 +35,20 @@
 </section>
 
 <style>
-/* Gradient animation */
-@keyframes gradient-y {
-  0%, 100% {
-    background-position: top center;
-    background-size: auto;
-  }
-  50% {
-    background-position: bottom center;
-    background-size: auto;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.animate-gradient-y {
-  animation: gradient-y 6s ease infinite;
+body {
+  overflow-x: hidden;
 }
 
-/* Story card styling */
+section {
+  width: calc(100vw);
+}
+
 .story-card {
   transition: transform 0.3s ease-out;
 }

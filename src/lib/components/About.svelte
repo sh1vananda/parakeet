@@ -13,7 +13,7 @@
     };
   </script>
   
-  <section class="relative flex flex-col items-center justify-center w-full h-full min-h-screen bg-gradient-to-br from-black via-gray-800 to-black animate-gradient-y text-white px-8">
+  <section class="relative flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-black via-gray-800 to-black text-white px-8">
     <!-- Section Title -->
     <h2 class="text-4xl font-bold text-center mb-8">{aboutContent.title}</h2>
   
@@ -34,23 +34,20 @@
   </section>
   
   <style>
-  /* Gradient animation */
-  @keyframes gradient-y {
-    0%, 100% {
-      background-position: top center;
-      background-size: auto;
-    }
-    50% {
-      background-position: bottom center;
-      background-size: auto;
-    }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
   }
   
-  .animate-gradient-y {
-    animation: gradient-y 6s ease infinite;
+  body {
+    overflow-x: hidden;
   }
   
-  /* Values list styling */
+  section {
+    width: calc(100vw);
+  }
+  
   ul li {
     transition: transform 0.3s ease-out;
   }
